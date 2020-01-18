@@ -21,15 +21,15 @@ import logging
 import unittest
 
 import numpy as np
-# from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 from art.attacks import AdversarialPatch
 from art.utils import master_seed
-# from art.classifiers.scikitlearn import ScikitlearnDecisionTreeClassifier
+from art.classifiers.scikitlearn import ScikitlearnDecisionTreeClassifier
 
 from tests.utils_test import TestBase
-# from tests.utils_test import get_classifier_tf#, get_classifier_kr, get_classifier_pt, get_iris_classifier_kr
-from tests.utils_test import get_classifier_tf, get_classifier_kr#, get_classifier_pt, get_iris_classifier_kr
+from tests.utils_test import get_classifier_tf#, get_classifier_kr, get_classifier_pt, get_iris_classifier_kr
+# from tests.utils_test import get_classifier_tf, get_classifier_kr#, get_classifier_pt, get_iris_classifier_kr
 
 logger = logging.getLogger(__name__)
 
@@ -84,61 +84,61 @@ class TestAdversarialPatch(TestBase):
         self.assertAlmostEqual(patch_adv[14, 14, 0], 18.402, delta=0.2)
         self.assertAlmostEqual(float(np.sum(patch_adv)), 1099.293, delta=50)
 
-    # def test_pytorch(self):
-    #     """
-    #     Third test with the PyTorchClassifier.
-    #     :return:
-    #     """
-    #     ptc = get_classifier_pt()
-    #
-    #     x_train = np.reshape(self.x_train_mnist, (self.n_train, 1, 28, 28)).astype(np.float32)
-    #
-    #     attack_ap = AdversarialPatch(ptc, rotation_max=22.5, scale_min=0.1, scale_max=1.0, learning_rate=5.0,
-    #                                  batch_size=10, max_iter=500)
-    #
-    #     patch_adv, _ = attack_ap.generate(x_train)
-    #
-    #     self.assertAlmostEqual(patch_adv[0, 8, 8], -3.143605902784875, delta=0.1)
-    #     self.assertAlmostEqual(patch_adv[0, 14, 14], 19.790434152473054, delta=0.1)
-    #     self.assertAlmostEqual(float(np.sum(patch_adv)), 383.068, delta=0.1)
-    #
-    # def test_failure_feature_vectors(self):
-    #     attack_params = {"rotation_max": 22.5, "scale_min": 0.1, "scale_max": 1.0, "learning_rate": 5.0,
-    #                      "number_of_steps": 5, "batch_size": 10}
-    #     classifier = get_iris_classifier_kr()
-    #     attack = AdversarialPatch(classifier=classifier)
-    #     attack.set_params(**attack_params)
-    #     data = np.random.rand(10, 4)
-    #
-    #     # Assert that value error is raised for feature vectors
-    #     with self.assertRaises(ValueError) as context:
-    #         attack.generate(data)
-    #
-    #     self.assertIn('Feature vectors detected.', str(context.exception))
-    #
-    # def test_classifier_type_check_fail_classifier(self):
-    #     # Use a useless test classifier to test basic classifier properties
-    #     class ClassifierNoAPI:
-    #         pass
-    #
-    #     classifier = ClassifierNoAPI
-    #     with self.assertRaises(TypeError) as context:
-    #         _ = AdversarialPatch(classifier=classifier)
-    #
-    #     self.assertIn('For `AdversarialPatch` classifier must be an instance of '
-    #                   '`art.classifiers.classifier.Classifier`, the provided classifier is instance of '
-    #                   '(<class \'object\'>,).', str(context.exception))
-    #
-    # def test_classifier_type_check_fail_gradients(self):
-    #     # Use a test classifier not providing gradients required by white-box attack
-    #     classifier = ScikitlearnDecisionTreeClassifier(model=DecisionTreeClassifier())
-    #     with self.assertRaises(TypeError) as context:
-    #         _ = AdversarialPatch(classifier=classifier)
-    #
-    #     self.assertIn('For `AdversarialPatch` classifier must be an instance of '
-    #                   '`art.classifiers.classifier.ClassifierNeuralNetwork` and '
-    #                   '`art.classifiers.classifier.ClassifierGradients`, the provided classifier is instance of '
-    #                   '(<class \'art.classifiers.scikitlearn.ScikitlearnClassifier\'>,).', str(context.exception))
+    def test_pytorch(self):
+        """
+        Third test with the PyTorchClassifier.
+        :return:
+        """
+        ptc = get_classifier_pt()
+
+        x_train = np.reshape(self.x_train_mnist, (self.n_train, 1, 28, 28)).astype(np.float32)
+
+        attack_ap = AdversarialPatch(ptc, rotation_max=22.5, scale_min=0.1, scale_max=1.0, learning_rate=5.0,
+                                     batch_size=10, max_iter=500)
+
+        patch_adv, _ = attack_ap.generate(x_train)
+
+        self.assertAlmostEqual(patch_adv[0, 8, 8], -3.143605902784875, delta=0.1)
+        self.assertAlmostEqual(patch_adv[0, 14, 14], 19.790434152473054, delta=0.1)
+        self.assertAlmostEqual(float(np.sum(patch_adv)), 383.068, delta=0.1)
+
+    def test_failure_feature_vectors(self):
+        attack_params = {"rotation_max": 22.5, "scale_min": 0.1, "scale_max": 1.0, "learning_rate": 5.0,
+                         "number_of_steps": 5, "batch_size": 10}
+        classifier = get_iris_classifier_kr()
+        attack = AdversarialPatch(classifier=classifier)
+        attack.set_params(**attack_params)
+        data = np.random.rand(10, 4)
+
+        # Assert that value error is raised for feature vectors
+        with self.assertRaises(ValueError) as context:
+            attack.generate(data)
+
+        self.assertIn('Feature vectors detected.', str(context.exception))
+
+    def test_classifier_type_check_fail_classifier(self):
+        # Use a useless test classifier to test basic classifier properties
+        class ClassifierNoAPI:
+            pass
+
+        classifier = ClassifierNoAPI
+        with self.assertRaises(TypeError) as context:
+            _ = AdversarialPatch(classifier=classifier)
+
+        self.assertIn('For `AdversarialPatch` classifier must be an instance of '
+                      '`art.classifiers.classifier.Classifier`, the provided classifier is instance of '
+                      '(<class \'object\'>,).', str(context.exception))
+
+    def test_classifier_type_check_fail_gradients(self):
+        # Use a test classifier not providing gradients required by white-box attack
+        classifier = ScikitlearnDecisionTreeClassifier(model=DecisionTreeClassifier())
+        with self.assertRaises(TypeError) as context:
+            _ = AdversarialPatch(classifier=classifier)
+
+        self.assertIn('For `AdversarialPatch` classifier must be an instance of '
+                      '`art.classifiers.classifier.ClassifierNeuralNetwork` and '
+                      '`art.classifiers.classifier.ClassifierGradients`, the provided classifier is instance of '
+                      '(<class \'art.classifiers.scikitlearn.ScikitlearnClassifier\'>,).', str(context.exception))
 
 
 if __name__ == '__main__':
