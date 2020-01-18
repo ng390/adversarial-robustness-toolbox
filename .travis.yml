@@ -26,4 +26,4 @@ install:
   - pip list
 
 script:
-  - python -m unittest tests/attacks/test_adversarial_patch.py
+  - ./run_tests.sh
