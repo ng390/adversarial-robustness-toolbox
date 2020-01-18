@@ -26,5 +26,4 @@ install:
   - pip list
 
 script:
-  - pwd
-#  - travis_wait 80 ./run_tests.sh
+  - travis_wait 80 ./run_tests.sh
