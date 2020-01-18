@@ -14,6 +14,7 @@ matrix:
         - py.test --pep8 -m pep8
 
 before_install:
+  - sudo apt-get -y install gcc-4.8
   - sed -i "s/tensorflow/tensorflow==${TENSORFLOW_V}/" test_requirements.txt
   - sed -i "s/keras/keras==${KERAS_V}/" test_requirements.txt
 
