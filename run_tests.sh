@@ -4,8 +4,8 @@ exit_code=0
 # --------------------------------------------------------------------------------------------------------------- TESTS
 
 declare -a attacks=("tests/attacks/test_adversarial_patch.py" )
-# \
-#                    "tests/attacks/test_boundary.py" \
+#                    "tests/attacks/test_boundary.py" )
+
 #                    "tests/attacks/test_carlini.py" \
 #                    "tests/attacks/test_copycat_cnn.py" \
 #                    "tests/attacks/test_decision_tree_attack.py" \
@@ -76,7 +76,8 @@ declare -a art=("tests/test_data_generators.py" \
                 "tests/test_utils.py" \
                 "tests/test_visualization.py" )
 
- tests_modules=("attacks")# \
+ tests_modules=("attacks")
+ # \
 #                "classifiers" \
 #                "defences" \
 #                "detection" \
