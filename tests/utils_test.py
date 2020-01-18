@@ -83,9 +83,6 @@ class TestBase(unittest.TestCase):
         import warnings
         # Filter warning for scipy, removed with scipy 1.4
         warnings.filterwarnings('ignore', '.*the output shape of zoom.*')
-        # Filter warning related to TensorRT
-        warnings.filterwarnings('ignore', '.*libnvinfer.*')
-        warnings.filterwarnings('ignore', '.*Cannot dlopen some TensorRT libraries.*')
 
     def setUp(self):
         master_seed(1234)
@@ -759,6 +756,7 @@ def get_iris_classifier_tf_v1():
     :rtype: `tuple(TensorFlowClassifier, tf.Session)`
     """
     import tensorflow as tf
+    tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
     if tf.__version__[0] == '2':
         # pylint: disable=E0401
         import tensorflow.compat.v1 as tf
