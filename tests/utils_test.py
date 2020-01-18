@@ -83,6 +83,9 @@ class TestBase(unittest.TestCase):
         import warnings
         # Filter warning for scipy, removed with scipy 1.4
         warnings.filterwarnings('ignore', '.*the output shape of zoom.*')
+        # Filter warning related to TensorRT
+        warnings.filterwarnings('ignore', '.*libnvinfer.*')
+        warnings.filterwarnings('ignore', '.*Cannot dlopen some TensorRT libraries.*')
 
     def setUp(self):
         master_seed(1234)
