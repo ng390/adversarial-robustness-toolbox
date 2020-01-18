@@ -50,40 +50,40 @@ class TestAdversarialPatch(TestBase):
         cls.x_test_mnist = cls.x_test_mnist[0:cls.n_test]
         cls.y_test_mnist = cls.y_test_mnist[0:cls.n_test]
 
-    def test_tensorflow(self):
-        """
-        First test with the TensorFlowClassifier.
-        :return:
-        """
-        tfc, sess = get_classifier_tf()
-
-        attack_ap = AdversarialPatch(tfc, rotation_max=22.5, scale_min=0.1, scale_max=1.0, learning_rate=5.0,
-                                     batch_size=10, max_iter=500)
-        patch_adv, _ = attack_ap.generate(self.x_train_mnist)
-
-        self.assertAlmostEqual(patch_adv[8, 8, 0], -3.1106631027725005, delta=0.4)
-        self.assertAlmostEqual(patch_adv[14, 14, 0], 18.101, delta=0.2)
-        self.assertAlmostEqual(float(np.sum(patch_adv)), 624.867, delta=70.0)
-
-        if sess is not None:
-            sess.close()
-
-    # def test_keras(self):
+    # def test_tensorflow(self):
     #     """
-    #     Second test with the KerasClassifier.
+    #     First test with the TensorFlowClassifier.
     #     :return:
     #     """
-    #     krc = get_classifier_kr()
+    #     tfc, sess = get_classifier_tf()
     #
-    #     attack_ap = AdversarialPatch(krc, rotation_max=22.5, scale_min=0.1, scale_max=1.0, learning_rate=5.0,
+    #     attack_ap = AdversarialPatch(tfc, rotation_max=22.5, scale_min=0.1, scale_max=1.0, learning_rate=5.0,
     #                                  batch_size=10, max_iter=500)
-    #     master_seed(1234)
     #     patch_adv, _ = attack_ap.generate(self.x_train_mnist)
     #
-    #     self.assertAlmostEqual(patch_adv[8, 8, 0], -3.494, delta=0.2)
-    #     self.assertAlmostEqual(patch_adv[14, 14, 0], 18.402, delta=0.2)
-    #     self.assertAlmostEqual(float(np.sum(patch_adv)), 1099.293, delta=50)
+    #     self.assertAlmostEqual(patch_adv[8, 8, 0], -3.1106631027725005, delta=0.4)
+    #     self.assertAlmostEqual(patch_adv[14, 14, 0], 18.101, delta=0.2)
+    #     self.assertAlmostEqual(float(np.sum(patch_adv)), 624.867, delta=70.0)
     #
+    #     if sess is not None:
+    #         sess.close()
+
+    def test_keras(self):
+        """
+        Second test with the KerasClassifier.
+        :return:
+        """
+        krc = get_classifier_kr()
+
+        attack_ap = AdversarialPatch(krc, rotation_max=22.5, scale_min=0.1, scale_max=1.0, learning_rate=5.0,
+                                     batch_size=10, max_iter=500)
+        master_seed(1234)
+        patch_adv, _ = attack_ap.generate(self.x_train_mnist)
+
+        self.assertAlmostEqual(patch_adv[8, 8, 0], -3.494, delta=0.2)
+        self.assertAlmostEqual(patch_adv[14, 14, 0], 18.402, delta=0.2)
+        self.assertAlmostEqual(float(np.sum(patch_adv)), 1099.293, delta=50)
+
     # def test_pytorch(self):
     #     """
     #     Third test with the PyTorchClassifier.
