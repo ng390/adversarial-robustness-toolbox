@@ -29,7 +29,7 @@ from art.utils import master_seed
 
 from tests.utils_test import TestBase
 # from tests.utils_test import get_classifier_tf#, get_classifier_kr, get_classifier_pt, get_iris_classifier_kr
-from tests.utils_test import get_classifier_kr#, get_classifier_pt, get_iris_classifier_kr
+from tests.utils_test import get_classifier_tf, get_classifier_kr#, get_classifier_pt, get_iris_classifier_kr
 
 logger = logging.getLogger(__name__)
 
@@ -50,23 +50,23 @@ class TestAdversarialPatch(TestBase):
         cls.x_test_mnist = cls.x_test_mnist[0:cls.n_test]
         cls.y_test_mnist = cls.y_test_mnist[0:cls.n_test]
 
-    # def test_tensorflow(self):
-    #     """
-    #     First test with the TensorFlowClassifier.
-    #     :return:
-    #     """
-    #     tfc, sess = get_classifier_tf()
-    #
-    #     attack_ap = AdversarialPatch(tfc, rotation_max=22.5, scale_min=0.1, scale_max=1.0, learning_rate=5.0,
-    #                                  batch_size=10, max_iter=500)
-    #     patch_adv, _ = attack_ap.generate(self.x_train_mnist)
-    #
-    #     self.assertAlmostEqual(patch_adv[8, 8, 0], -3.1106631027725005, delta=0.4)
-    #     self.assertAlmostEqual(patch_adv[14, 14, 0], 18.101, delta=0.2)
-    #     self.assertAlmostEqual(float(np.sum(patch_adv)), 624.867, delta=70.0)
-    #
-    #     if sess is not None:
-    #         sess.close()
+    def test_tensorflow(self):
+        """
+        First test with the TensorFlowClassifier.
+        :return:
+        """
+        tfc, sess = get_classifier_tf()
+
+        attack_ap = AdversarialPatch(tfc, rotation_max=22.5, scale_min=0.1, scale_max=1.0, learning_rate=5.0,
+                                     batch_size=10, max_iter=500)
+        patch_adv, _ = attack_ap.generate(self.x_train_mnist)
+
+        self.assertAlmostEqual(patch_adv[8, 8, 0], -3.1106631027725005, delta=0.4)
+        self.assertAlmostEqual(patch_adv[14, 14, 0], 18.101, delta=0.2)
+        self.assertAlmostEqual(float(np.sum(patch_adv)), 624.867, delta=70.0)
+
+        if sess is not None:
+            sess.close()
 
     def test_keras(self):
         """
