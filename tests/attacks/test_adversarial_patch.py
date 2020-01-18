@@ -28,7 +28,8 @@ from art.attacks import AdversarialPatch
 # from art.classifiers.scikitlearn import ScikitlearnDecisionTreeClassifier
 
 from tests.utils_test import TestBase
-from tests.utils_test import get_classifier_tf#, get_classifier_kr, get_classifier_pt, get_iris_classifier_kr
+# from tests.utils_test import get_classifier_tf#, get_classifier_kr, get_classifier_pt, get_iris_classifier_kr
+from tests.utils_test import get_classifier_kr#, get_classifier_pt, get_iris_classifier_kr
 
 logger = logging.getLogger(__name__)
 
