@@ -24,7 +24,7 @@ import numpy as np
 # from sklearn.tree import DecisionTreeClassifier
 
 from art.attacks import AdversarialPatch
-# from art.utils import master_seed
+from art.utils import master_seed
 # from art.classifiers.scikitlearn import ScikitlearnDecisionTreeClassifier
 
 from tests.utils_test import TestBase
