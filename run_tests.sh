@@ -3,7 +3,7 @@ exit_code=0
 
 # --------------------------------------------------------------------------------------------------------------- TESTS
 
-declare -a attacks=("tests/attacks/test_adversarial_patch.py")# \
+declare -a attacks=("tests/attacks/test_adversarial_patch.py") # \
 #                    "tests/attacks/test_boundary.py" \
 #                    "tests/attacks/test_carlini.py" \
 #                    "tests/attacks/test_copycat_cnn.py" \
